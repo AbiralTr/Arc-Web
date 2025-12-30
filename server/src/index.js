@@ -1,20 +1,18 @@
 import express from "express";
-import dotenv from "dotenv";
-import morgan from "morgan";
-import helmet from "helmet";
-import cookieParser from "cookie-parser";
+import { engine } from "express-handlebars";
+import path from "path";
 
-dotenv.config();
 const app = express();
+const PORT = 3000;
 
-app.use(helmet());
-app.use(morgan("dev"));
-app.use(express.json({ limit: "1mb" }));
-app.use(cookieParser());
+app.engine("hbs", engine({ extname: ".hbs" }));
+app.set("view engine", "hbs");
+app.set("views", path.join(process.cwd(), "views"));
 
-app.get("/health", (req, res) => {
-  res.json({ ok: true, service: "arc-web", timestamp: new Date().toISOString() });
+app.use(express.static("public"));
+
+app.get("/", (req, res) => {
+  res.render("home");
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`ARC server running on port ${PORT}`));
+app.listen(PORT, () => console.log("Arc listening on", PORT));
