@@ -1,0 +1,84 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <h1>Register</h1>
+
+    <form id="register">
+      <input
+        name="username"
+        type="text"
+        placeholder="Username"
+        minlength="3"
+        maxlength="20"
+        pattern="^[a-zA-Z0-9_]+$"
+        required
+      />
+
+      <input
+        name="email"
+        type="email"
+        placeholder="Email"
+        required
+      />
+
+      <input
+        name="password"
+        type="password"
+        placeholder="Password (8+ characters)"
+        minlength="8"
+        required
+      />
+
+      <input
+        name="confirmPassword"
+        type="password"
+        placeholder="Re-enter password"
+        minlength="8"
+        required
+      />
+
+      <button type="submit">Create account</button>
+    </form>
+
+    <p id="msg" class="muted"></p>
+
+    <p class="muted">
+      Already have an account?
+      <a href="/login">Login</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.getElementById("register").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = new FormData(e.target);
+    const payload = Object.fromEntries(form.entries());
+
+    if (payload.password !== payload.confirmPassword) {
+      document.getElementById("msg").textContent = "Passwords do not match";
+      return;
+    }
+
+    // Don't send confirmPassword to the backend
+    delete payload.confirmPassword;
+
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+    document.getElementById("msg").textContent =
+      res.ok
+        ? "Account created! Redirecting..."
+        : (data.error || "Something went wrong");
+
+    if (res.ok) {
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 600);
+    }
+  });
+</script>

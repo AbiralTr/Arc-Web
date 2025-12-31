@@ -1,2 +1,122 @@
-<h1>Arc</h1>
-<p>Test</p>
+<header class="topbar">
+  <button class="icon-btn" id="menuBtn" aria-label="Open menu">
+    <span class="hamburger"></span>
+  </button>
+
+  <div class="brand">ARC</div>
+
+  <div class="topbar-right" id="whoami">Not logged in</div>
+</header>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div class="drawer-title">Account</div>
+    <button class="icon-btn" id="closeBtn" aria-label="Close menu">✕</button>
+  </div>
+
+  <div class="drawer-body">
+    <div class="drawer-user" id="drawerUser">Guest</div>
+
+    <div class="drawer-actions">
+      <a class="drawer-link" href="/login" id="loginLink">Login</a>
+      <a class="drawer-link" href="/register" id="registerLink">Register</a>
+      <button class="drawer-link danger" id="logoutBtn" style="display:none;">Logout</button>
+    </div>
+  </div>
+</aside>
+
+<div class="backdrop" id="backdrop"></div>
+
+<main class="main">
+  <section class="stat-card">
+    <div class="stat-card-head">
+      <div class="stat-card-title">Stats</div>
+      <div class="stat-card-sub" id="subTitle">Baseline</div>
+    </div>
+
+    <!-- Pentagon / radar -->
+    <div class="radar-wrap">
+      <svg class="radar" viewBox="0 0 300 300" role="img" aria-label="Stats radar chart">
+        <!-- grid pentagons -->
+        <polygon class="grid" points="150,35 258,115 216,245 84,245 42,115"></polygon>
+        <polygon class="grid" points="150,60 237,125 204,225 96,225 63,125"></polygon>
+        <polygon class="grid" points="150,85 216,135 192,205 108,205 84,135"></polygon>
+
+        <!-- axes -->
+        <line class="axis" x1="150" y1="150" x2="150" y2="35"></line>
+        <line class="axis" x1="150" y1="150" x2="258" y2="115"></line>
+        <line class="axis" x1="150" y1="150" x2="216" y2="245"></line>
+        <line class="axis" x1="150" y1="150" x2="84" y2="245"></line>
+        <line class="axis" x1="150" y1="150" x2="42" y2="115"></line>
+
+        <!-- stat polygon (static placeholder values for now) -->
+        <polygon class="value" id="valuePoly"
+          points="150,70 225,132 190,220 110,210 78,132"></polygon>
+
+        <!-- labels -->
+        <text class="label" x="150" y="22" text-anchor="middle">STR</text>
+        <text class="label" x="275" y="112" text-anchor="start">INT</text>
+        <text class="label" x="232" y="270" text-anchor="middle">END</text>
+        <text class="label" x="68" y="270" text-anchor="middle">CHA</text>
+        <text class="label" x="25" y="112" text-anchor="end">WIS</text>
+      </svg>
+    </div>
+
+    <div class="stat-list">
+      <div class="stat-row"><span>STR</span><span id="s_str">6</span></div>
+      <div class="stat-row"><span>INT</span><span id="s_int">7</span></div>
+      <div class="stat-row"><span>END</span><span id="s_end">5</span></div>
+      <div class="stat-row"><span>CHA</span><span id="s_cha">4</span></div>
+      <div class="stat-row"><span>WIS</span><span id="s_wis">6</span></div>
+    </div>
+  </section>
+</main>
+
+<script>
+  const drawer = document.getElementById("drawer");
+  const backdrop = document.getElementById("backdrop");
+  const menuBtn = document.getElementById("menuBtn");
+  const closeBtn = document.getElementById("closeBtn");
+
+  const whoami = document.getElementById("whoami");
+  const drawerUser = document.getElementById("drawerUser");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const loginLink = document.getElementById("loginLink");
+  const registerLink = document.getElementById("registerLink");
+
+  function openDrawer() {
+    drawer.classList.add("open");
+    backdrop.classList.add("show");
+  }
+  function closeDrawer() {
+    drawer.classList.remove("open");
+    backdrop.classList.remove("show");
+  }
+
+  menuBtn.addEventListener("click", openDrawer);
+  closeBtn.addEventListener("click", closeDrawer);
+  backdrop.addEventListener("click", closeDrawer);
+
+  logoutBtn.addEventListener("click", async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.href = "/login";
+  });
+
+
+  // Session check
+  fetch("/api/auth/me")
+    .then(r => r.json())
+    .then(data => {
+      if (data.user) {
+        const name = data.user.username || data.user.email;
+        whoami.textContent = name;
+        drawerUser.textContent = name;
+        logoutBtn.style.display = "inline-block";
+        loginLink.style.display = "none";
+        registerLink.style.display = "none";
+      } else {
+        whoami.textContent = "Guest";
+      }
+    })
+    .catch(() => whoami.textContent = "Guest");
+</script>
