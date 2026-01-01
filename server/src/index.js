@@ -6,6 +6,8 @@ import dotenv from "dotenv";
 
 import { prisma } from "./db.js";
 import authRouter from "./routes/auth.js";
+import questsRouter from "./routes/quests.js";
+import userRouter from "./routes/user.js";
 
 dotenv.config();
 
@@ -22,6 +24,8 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRouter);
+app.use("/api/quests", questsRouter);
+app.use("/api/user", userRouter);
 
 app.get("/", (req, res) => {
   res.render("home");

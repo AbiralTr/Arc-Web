@@ -7,13 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
   username     String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
+
+  level        Int      @default(1)
+  xp           Int      @default(0)
+
+  str          Int      @default(1)
+  int          Int      @default(1)
+  end          Int      @default(1)
+  cha          Int      @default(1)
+  wis          Int      @default(1)
+
   quests       Quest[]
 }
 
@@ -22,9 +31,12 @@ model Quest {
   id          String   @id @default(uuid())
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  stat        String   // "str" | "int" | "end" | "cha" | "wis"
   title       String
   description String
   difficulty  Int      @default(1)
+  xpReward    Int      @default(10)
   tags        Json?
   status      String   @default("active")
   createdAt   DateTime @default(now())
