@@ -1,6 +1,5 @@
-// public/js/home.js
 (() => {
-  // ---------- Helpers ----------
+
   const $ = (id) => document.getElementById(id);
 
   function escapeHtml(s) {
@@ -23,15 +22,11 @@
     return Math.max(min, Math.min(max, n));
   }
 
-  function radarPoints(stats, maxStat = MAX_STAT) {
-    const svg = document.querySelector(".radar");
-    if (!svg) return "";
-
-    const vb = svg.viewBox.baseVal;
-    const cx = vb.x + vb.width / 2;
-    const cy = vb.y + vb.height / 2;
-
-    const rMax = Math.min(vb.width, vb.height) * 0.35;
+  function radarPoints(svg, stats, maxStat = MAX_STAT) {
+    const vb = svg.viewBox?.baseVal;
+    const cx = vb ? (vb.x + vb.width / 2) : 100;
+    const cy = vb ? (vb.y + vb.height / 2) : 100;
+    const rMax = vb ? (Math.min(vb.width, vb.height) * 0.35) : 70;
 
     const values = [stats.str, stats.int, stats.end, stats.cha, stats.wis]
       .map(v => clamp(Number(v ?? 0), 0, maxStat) / maxStat);
@@ -49,9 +44,32 @@
   }
 
   function updateRadar(user) {
-    const poly = $("valuePoly");
+    const poly = document.getElementById("valuePoly");
     if (!poly) return;
-    poly.setAttribute("points", radarPoints(user));
+
+    const svg = poly.ownerSVGElement;
+    if (!svg) return;
+
+    poly.setAttribute("points", radarPoints(svg, user));
+  }
+
+
+  function setXpUI(user) {
+    const fill = document.getElementById("xpFill");
+    const meta = document.getElementById("xpMeta");
+    const bar = document.querySelector(".xp-bar");
+
+    if (!fill || !meta || !bar) return;
+
+    const cur = Number(user.xp ?? 0);
+    const need = Number(user.xpToNext ?? 0); // <-- coming from backend next step
+    const pct = need > 0 ? Math.max(0, Math.min(100, (cur / need) * 100)) : 0;
+
+    fill.style.width = `${pct}%`;
+    meta.textContent = `Level ${user.level} · ${cur} / ${need} XP`;
+
+    bar.setAttribute("aria-valuenow", String(Math.round(pct)));
+    bar.setAttribute("aria-valuemax", "100");
   }
 
   function setStatUI(user) {
@@ -61,7 +79,13 @@
     if ($("subTitle")) {
       $("subTitle").textContent = `Level ${user.level} · ${user.xp} XP`;
     }
+
+    setXpUI(user);
+    updateRadar(user);
   }
+
+  
+
 
   async function loadStats() {
     let res;
@@ -77,7 +101,6 @@
     if (!user) return;
 
     setStatUI(user);
-    updateRadar(user);
   }
 
   function renderQuestCard(q) {

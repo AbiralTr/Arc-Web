@@ -9,7 +9,6 @@ if (payload.password !== payload.confirmPassword) {
     return;
 }
 
-// Don't send confirmPassword to the backend
 delete payload.confirmPassword;
 
 const res = await fetch("/api/auth/register", {
