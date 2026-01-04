@@ -1,5 +1,4 @@
 (() => {
-
   const $ = (id) => document.getElementById(id);
 
   function escapeHtml(s) {
@@ -43,6 +42,22 @@
     }).join(" ");
   }
 
+  async function loadChangelog() {
+    const el = document.getElementById("changelogBody");
+    if (!el) return;
+
+    try {
+      const res = await fetch("../text/changelog.txt");
+      if (!res.ok) throw new Error("Failed to load changelog");
+
+      const text = await res.text();
+      el.textContent = text; 
+    } catch (err) {
+      el.textContent = "Unable to load changelog.";
+    }
+  }
+
+
   function updateRadar(user) {
     const poly = document.getElementById("valuePoly");
     if (!poly) return;
@@ -75,13 +90,8 @@
   function setStatUI(user) {
     setText("s_str", user.str); setText("s_int", user.int); setText("s_end", user.end); setText("s_cha", user.cha); setText("s_wis", user.wis);
     setText("statSTR", user.str); setText("statINT", user.int); setText("statEND", user.end); setText("statCHA", user.cha); setText("statWIS", user.wis);
-
-    setXpUI(user);
     updateRadar(user);
   }
-
-  
-
 
   async function loadStats() {
     let res;
@@ -97,6 +107,7 @@
     if (!user) return;
 
     setStatUI(user);
+    setXpUI(user);
   }
 
   function renderQuestCard(q) {
@@ -272,7 +283,11 @@
   document.addEventListener("DOMContentLoaded", async () => {
     wireDrawer();
     wireStatButtons();
+    loadChangelog();
     await loadAuthUI();
     await loadStats();
   });
+
+  
+
 })();

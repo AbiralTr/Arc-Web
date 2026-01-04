@@ -1,0 +1,4 @@
+- Added Changelog
+- Removed unused route
+- Dynamically changing radar fix
+- Revamped CSS
