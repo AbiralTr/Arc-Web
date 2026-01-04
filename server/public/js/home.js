@@ -62,7 +62,7 @@
     if (!fill || !meta || !bar) return;
 
     const cur = Number(user.xp ?? 0);
-    const need = Number(user.xpToNext ?? 0); // <-- coming from backend next step
+    const need = Number(user.xpToNext ?? 0);
     const pct = need > 0 ? Math.max(0, Math.min(100, (cur / need) * 100)) : 0;
 
     fill.style.width = `${pct}%`;
@@ -75,10 +75,6 @@
   function setStatUI(user) {
     setText("s_str", user.str); setText("s_int", user.int); setText("s_end", user.end); setText("s_cha", user.cha); setText("s_wis", user.wis);
     setText("statSTR", user.str); setText("statINT", user.int); setText("statEND", user.end); setText("statCHA", user.cha); setText("statWIS", user.wis);
-
-    if ($("subTitle")) {
-      $("subTitle").textContent = `Level ${user.level} · ${user.xp} XP`;
-    }
 
     setXpUI(user);
     updateRadar(user);

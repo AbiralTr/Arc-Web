@@ -217,6 +217,37 @@ button{ font-family: inherit; }
   }
 }
 
+.info-panel{
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: var(--pad);
+  box-shadow: var(--shadow);
+  min-height: 520px;
+
+  display:flex;
+  flex-direction: column;
+}
+
+.home-anchor .info-panel{
+  position: absolute;
+  top: calc(var(--xpFloat) * -1);
+  right: calc(100% + 64px);
+  width: var(--colW);
+  min-height: 770px;
+  height: auto
+}
+
+@media (max-width: 1180px){
+  .home-anchor .info-panel{
+    position: static;
+    width: 100%;
+    margin-top: 18px;
+    left: auto;
+  }
+}
+
 /* XP Card */
 .xp-card{
   background: var(--card);
@@ -465,6 +496,27 @@ button{ font-family: inherit; }
   cursor: not-allowed;
 }
 
+.info-panel-head{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.info-panel-title{
+  font-size: 18px;
+  font-weight: 900;
+}
+.info-panel-sub{
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.info-panel-body{
+  flex: 1;
+  overflow: auto;
+  padding-top: 6px;
+}
 
 /* Login and Register Pages */
 .auth-page{
