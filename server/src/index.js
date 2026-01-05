@@ -31,9 +31,8 @@ app.get("/", (req, res) => {
   res.send("Welcome to Arc API, please use the /home endpoint to access the web app.");
 });
 
-app.get("/home", requirePageUser, (req, res) => {
-  res.render("home");
-});
+
+app.get("/home", requirePageUser, (req, res) => res.render("home"));
 
 app.get("/register", (req, res) => res.render("register"));
 

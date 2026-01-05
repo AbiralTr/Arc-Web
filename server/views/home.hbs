@@ -29,84 +29,97 @@
 
 <main class="main">
   <div class="home-anchor">
-     <section class="xp-card" aria-label="Level progress">
-      <div class="xp-head">
-        <div class="xp-title">Progress</div>
-        <div class="xp-meta" id="xpMeta"></div>
+
+    <section class="info-panel" aria-label="Changelog">
+      <div class="info-panel-head">
+        <div class="info-panel-title">Changelog</div>
       </div>
 
-      <div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <div class="xp-fill" id="xpFill" style="width:0%"></div>
+      <div id="changelogBody" class="info-panel-body">
+        <div class="muted"></div>
       </div>
     </section>
-    <section class="stat-card">
-      <div class="stat-card-head">
-        <div class="stat-card-title">Stats</div>
+
+    <section class="stat-card" aria-label="Stats">
+
+      <section class="xp-card" aria-label="Level progress">
+        <div class="xp-head">
+          <div class="xp-title">Progress</div>
+          <div class="xp-meta" id="xpMeta"></div>
+        </div>
+
+        <div class="xp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="xp-fill" id="xpFill" style="width:0%"></div>
+        </div>
+      </section>
+
+      <div class="stat-card-body">
+        <div class="stat-card-head">
+          <div class="stat-card-title">Stats</div>
+        </div>
+
+        <div class="radar-wrap">
+          <svg class="radar" viewBox="0 0 300 300" role="img" aria-label="Stats radar chart">
+            <polygon class="grid" points="150,35 258,115 216,245 84,245 42,115"></polygon>
+            <polygon class="grid" points="150,60 237,125 204,225 96,225 63,125"></polygon>
+            <polygon class="grid" points="150,85 216,135 192,205 108,205 84,135"></polygon>
+
+            <line class="axis" x1="150" y1="150" x2="150" y2="35"></line>
+            <line class="axis" x1="150" y1="150" x2="258" y2="115"></line>
+            <line class="axis" x1="150" y1="150" x2="216" y2="245"></line>
+            <line class="axis" x1="150" y1="150" x2="84" y2="245"></line>
+            <line class="axis" x1="150" y1="150" x2="42" y2="115"></line>
+
+            <polygon class="value" id="valuePoly"
+              points="150,70 225,132 190,220 110,210 78,132"></polygon>
+
+            <text class="label" x="150" y="22" text-anchor="middle">STR</text>
+            <text class="label" x="275" y="112" text-anchor="start">INT</text>
+            <text class="label" x="232" y="270" text-anchor="middle">END</text>
+            <text class="label" x="68" y="270" text-anchor="middle">CHA</text>
+            <text class="label" x="25" y="112" text-anchor="end">WIS</text>
+          </svg>
+        </div>
+
+        <div class="stat-list">
+          <div class="stat-row">
+            <span class="stat-name">STR</span>
+            <span class="stat-val" id="s_str">-</span>
+            <button class="stat-plus" data-stat="str" aria-label="Generate STR quest">+</button>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-name">INT</span>
+            <span class="stat-val" id="s_int">-</span>
+            <button class="stat-plus" data-stat="int" aria-label="Generate INT quest">+</button>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-name">END</span>
+            <span class="stat-val" id="s_end">-</span>
+            <button class="stat-plus" data-stat="end" aria-label="Generate END quest">+</button>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-name">CHA</span>
+            <span class="stat-val" id="s_cha">-</span>
+            <button class="stat-plus" data-stat="cha" aria-label="Generate CHA quest">+</button>
+          </div>
+
+          <div class="stat-row">
+            <span class="stat-name">WIS</span>
+            <span class="stat-val" id="s_wis">-</span>
+            <button class="stat-plus" data-stat="wis" aria-label="Generate WIS quest">+</button>
+          </div>
+        </div>
+
+        <div class="quest-actions">
+          <div id="questOut" class="quest-out muted"></div>
+        </div>
       </div>
-
-      <div class="radar-wrap">
-        <svg class="radar" viewBox="0 0 300 300" role="img" aria-label="Stats radar chart">
-          <polygon class="grid" points="150,35 258,115 216,245 84,245 42,115"></polygon>
-          <polygon class="grid" points="150,60 237,125 204,225 96,225 63,125"></polygon>
-          <polygon class="grid" points="150,85 216,135 192,205 108,205 84,135"></polygon>
-
-          <line class="axis" x1="150" y1="150" x2="150" y2="35"></line>
-          <line class="axis" x1="150" y1="150" x2="258" y2="115"></line>
-          <line class="axis" x1="150" y1="150" x2="216" y2="245"></line>
-          <line class="axis" x1="150" y1="150" x2="84" y2="245"></line>
-          <line class="axis" x1="150" y1="150" x2="42" y2="115"></line>
-
-          <polygon class="value" id="valuePoly"
-            points="150,70 225,132 190,220 110,210 78,132"></polygon>
-
-          <text class="label" x="150" y="22" text-anchor="middle">STR</text>
-          <text class="label" x="275" y="112" text-anchor="start">INT</text>
-          <text class="label" x="232" y="270" text-anchor="middle">END</text>
-          <text class="label" x="68" y="270" text-anchor="middle">CHA</text>
-          <text class="label" x="25" y="112" text-anchor="end">WIS</text>
-        </svg>
-      </div>
-
-      <div class="stat-list">
-        <div class="stat-row">
-          <span class="stat-name">STR</span>
-          <span class="stat-val" id="s_str">-</span>
-          <button class="stat-plus" data-stat="str" aria-label="Generate STR quest">+</button>
-        </div>
-
-        <div class="stat-row">
-          <span class="stat-name">INT</span>
-          <span class="stat-val" id="s_int">-</span>
-          <button class="stat-plus" data-stat="int" aria-label="Generate INT quest">+</button>
-        </div>
-
-        <div class="stat-row">
-          <span class="stat-name">END</span>
-          <span class="stat-val" id="s_end">-</span>
-          <button class="stat-plus" data-stat="end" aria-label="Generate END quest">+</button>
-        </div>
-
-        <div class="stat-row">
-          <span class="stat-name">CHA</span>
-          <span class="stat-val" id="s_cha">-</span>
-          <button class="stat-plus" data-stat="cha" aria-label="Generate CHA quest">+</button>
-        </div>
-
-        <div class="stat-row">
-          <span class="stat-name">WIS</span>
-          <span class="stat-val" id="s_wis">-</span>
-          <button class="stat-plus" data-stat="wis" aria-label="Generate WIS quest">+</button>
-        </div>
-      </div>
-
-
-      <div class="quest-actions">
-        <div id="questOut" class="quest-out muted"></div>
-      </div>
-
     </section>
 
-    <section class="quest-panel">
+    <section class="quest-panel" aria-label="Active Quest">
       <div class="quest-panel-head">
         <div class="quest-panel-title">Active Quest</div>
         <div class="quest-panel-sub muted" id="questPanelSub">Click '+' to Begin</div>
@@ -117,18 +130,7 @@
       </div>
     </section>
 
-    <section class="info-panel">
-      <div class="info-panel-head">
-        <div class="info-panel-title">Changelog</div>
-      </div>
-
-      <div id="changelogBody" class="info-panel-body">
-        <div class="muted"></div>
-      </div>
-    </section>
-
   </div>
 </main>
 
 <script src="/js/home.js" defer></script>
-

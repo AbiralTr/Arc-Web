@@ -8,3 +8,5 @@
 1/4/26:
     Changed login auth to require username instead of email
     Replaced / route with /home, rewired api calls accomodate
+    Now hosted on Render
+    Fixed frontend scale for laptop scale + other frontend changes
