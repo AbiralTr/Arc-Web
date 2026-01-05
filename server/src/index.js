@@ -27,7 +27,11 @@ app.use("/api/quests", questsRouter);
 app.use("/api/user", userRouter);
 
 // Routes
-app.get("/", requirePageUser, (req, res) => {
+app.get("/", (req, res) => {
+  res.send("Welcome to Arc API, please use the /home endpoint to access the web app.");
+});
+
+app.get("/home", requirePageUser, (req, res) => {
   res.render("home");
 });
 

@@ -1,31 +1,31 @@
 document.getElementById("register").addEventListener("submit", async (e) => {
-e.preventDefault();
+    e.preventDefault();
 
-const form = new FormData(e.target);
-const payload = Object.fromEntries(form.entries());
+    const form = new FormData(e.target);
+    const payload = Object.fromEntries(form.entries());
 
-if (payload.password !== payload.confirmPassword) {
-    document.getElementById("msg").textContent = "Passwords do not match";
-    return;
-}
+    if (payload.password !== payload.confirmPassword) {
+        document.getElementById("msg").textContent = "Passwords do not match";
+        return;
+    }
 
-delete payload.confirmPassword;
+    delete payload.confirmPassword;
 
-const res = await fetch("/api/auth/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-});
+    const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
 
-const data = await res.json();
-document.getElementById("msg").textContent =
-    res.ok
-    ? "Account created! Redirecting..."
-    : (data.error || "Something went wrong");
+    const data = await res.json();
+    document.getElementById("msg").textContent =
+        res.ok
+        ? "Account created! Redirecting..."
+        : (data.error || "Something went wrong");
 
-if (res.ok) {
-    setTimeout(() => {
-    window.location.href = "/";
-    }, 600);
-}
+    if (res.ok) {
+        setTimeout(() => {
+        window.location.href = "/";
+        }, 600);
+    }
 });

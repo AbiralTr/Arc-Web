@@ -43,18 +43,18 @@ router.post("/generate", requireUser, async (req, res) => {
   if (!user) return res.status(401).json({ error: "Not logged in" });
 
   const prompt = `
-Generate ONE real-world quest for improving ${stat.toUpperCase()}.
-User: ${user.username}, level ${user.level}, xp ${user.xp}.
-Current stats: STR ${user.str}, INT ${user.int}, END ${user.end}, CHA ${user.cha}, WIS ${user.wis}.
+    Generate ONE real-world quest for improving ${stat.toUpperCase()}.
+    User: ${user.username}, level ${user.level}, xp ${user.xp}.
+    Current stats: STR ${user.str}, INT ${user.int}, END ${user.end}, CHA ${user.cha}, WIS ${user.wis}.
 
-Return strict JSON with keys:
-title (string),
-description (string, 2-4 sentences),
-difficulty (integer 1-5),
-xpReward (integer 5-50),
-tags (array of strings).
-No extra keys. No markdown.
-`;
+    Return strict JSON with keys:
+    title (string),
+    description (string, 2-4 sentences),
+    difficulty (integer 1-5),
+    xpReward (integer 5-50),
+    tags (array of strings).
+    No extra keys. No markdown.
+  `;
 
   const response = await client.responses.create({
     model: "gpt-4o",
