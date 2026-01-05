@@ -5,6 +5,6 @@
     Revamped CSS
     Added auth check for home route
 
-1/3/26:
+1/4/26:
     Changed login auth to require username instead of email
-    
+    Replaced / route with /home, rewired api calls accomodate
