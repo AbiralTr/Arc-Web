@@ -12,6 +12,8 @@ ARC already supports:
 
 Although this project is still being expanded.
 
+Now hosted on render: https://arc-web-8i2i.onrender.com/home
+
 ## Stack
 
 - Node.js and Express
@@ -22,4 +24,4 @@ Although this project is still being expanded.
 
 ## Config
 
-The app uses environment variables for configuration (database connection, auth secrets, API keys). These are not included in the repository.
+The app uses environment variables for configuration (database connection, auth secrets, API keys). These are of course not included in the repository.
