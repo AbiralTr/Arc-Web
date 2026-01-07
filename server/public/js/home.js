@@ -216,64 +216,6 @@
     renderQuestCard(data.quest);
   }
 
-  async function loadAuthUI() {
-    const whoami = $("whoami");
-    const drawerUser = $("drawerUser");
-    const logoutBtn = $("logoutBtn");
-    const loginLink = $("loginLink");
-    const registerLink = $("registerLink");
-
-    let res;
-    try {
-      res = await fetch("/api/auth/me");
-    } catch {
-      if (whoami) whoami.textContent = "Guest";
-      return;
-    }
-
-    let data = null;
-    try { data = await res.json(); } catch { /* ignore */ }
-
-    if (res.ok && data?.user) {
-      const name = data.user.username || data.user.email;
-      if (whoami) whoami.textContent = name;
-      if (drawerUser) drawerUser.textContent = name;
-      if (logoutBtn) logoutBtn.style.display = "inline-block";
-      if (loginLink) loginLink.style.display = "none";
-      if (registerLink) registerLink.style.display = "none";
-    } else {
-      if (whoami) whoami.textContent = "Guest";
-    }
-  }
-
-  function wireDrawer() {
-    const drawer = $("drawer");
-    const backdrop = $("backdrop");
-    const menuBtn = $("menuBtn");
-    const closeBtn = $("closeBtn");
-
-    const openDrawer = () => {
-      if (drawer) drawer.classList.add("open");
-      if (backdrop) backdrop.classList.add("show");
-    };
-    const closeDrawer = () => {
-      if (drawer) drawer.classList.remove("open");
-      if (backdrop) backdrop.classList.remove("show");
-    };
-
-    if (menuBtn) menuBtn.addEventListener("click", openDrawer);
-    if (closeBtn) closeBtn.addEventListener("click", closeDrawer);
-    if (backdrop) backdrop.addEventListener("click", closeDrawer);
-
-    const logoutBtn = $("logoutBtn");
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", async () => {
-        await fetch("/api/auth/logout", { method: "POST" });
-        window.location.href = "/login";
-      });
-    }
-  }
-
   function wireStatButtons() {
     document.querySelectorAll(".stat-plus").forEach(btn => {
       btn.addEventListener("click", () => generateQuestFor(btn.dataset.stat));
@@ -281,10 +223,8 @@
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
-    wireDrawer();
     wireStatButtons();
     loadChangelog();
-    await loadAuthUI();
     await loadStats();
   });
 

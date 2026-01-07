@@ -25,7 +25,7 @@ document.getElementById("register").addEventListener("submit", async (e) => {
 
     if (res.ok) {
         setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/home";
         }, 600);
     }
 });

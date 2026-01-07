@@ -1,0 +1,34 @@
+<header class="topbar auth-{{isAuthPage}}">
+  {{#unless isAuthPage}}
+    <button class="icon-btn" id="menuBtn" aria-label="Open menu">
+      <span class="hamburger"></span>
+    </button>
+  {{/unless}}
+
+  <a class="brand" href="/home" aria-label="Home">ARC</a>
+
+  {{#unless isAuthPage}}
+    <div class="topbar-right" id="whoami">Not logged in</div>
+  {{/unless}}
+</header>
+
+
+{{#unless isAuthPage}}
+  <div class="overlay" id="overlay" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div class="drawer-title">Account</div>
+      <button class="icon-btn" id="closeBtn" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <div class="drawer-actions">
+        <a class="drawer-link" href="/login" id="loginLink">Login</a>
+        <a class="drawer-link" href="/register" id="registerLink">Register</a>
+        <a class="drawer-link" href="/friends">Friends</a>
+        <button class="drawer-link danger" id="logoutBtn" style="display:none;">Logout</button>
+      </div>
+    </div>
+  </aside>
+{{/unless}}

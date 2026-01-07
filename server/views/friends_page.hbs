@@ -1,0 +1,54 @@
+<div class="friends-page">
+  <div class="card friends-card users-card">
+    <h2>Recommended</h2>
+
+    <ul class="list" id="usersList">
+      {{#each users}}
+        <li class="list-row">
+          <div class="row-main">
+            <div class="row-title">{{this.username}}</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn" data-action="request" data-user-id="{{this.id}}">Add</button>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  <div class="right-col">
+    <div class="card friends-card inbox-card">
+      <h2>Inbox</h2>
+
+      <ul class="list" id="inboxList">
+        {{#each inbox}}
+          <li class="list-row">
+            <div class="row-main">
+              <div class="row-title">{{this.requester.username}}</div>
+            </div>
+            <div class="row-actions">
+              <button class="btn" data-action="accept" data-friendship-id="{{this.id}}">Accept</button>
+              <button class="btn btn-ghost" data-action="decline" data-friendship-id="{{this.id}}">Decline</button>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+
+    <div class="card friends-card list-card">
+      <h2>Friends</h2>
+
+      <ul class="list" id="friendsList">
+        {{#each friends}}
+          <li class="list-row">
+            <div class="row-main">
+              <div class="row-title">{{this.user.username}}</div>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="/js/friends_page.js" defer></script>

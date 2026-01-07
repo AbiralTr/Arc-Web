@@ -8,6 +8,7 @@ import authRouter from "./routes/auth.js";
 import questsRouter from "./routes/quests.js";
 import userRouter from "./routes/user.js";
 import {requirePageUser} from "./middleware/requirePageUser.js";
+import friendsRouter from "./routes/friends.js";
 
 dotenv.config();
 
@@ -25,6 +26,13 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/quests", questsRouter);
 app.use("/api/user", userRouter);
+app.use(friendsRouter);
+app.use((req, res, next) => {
+  res.locals.isAuthPage =
+    req.path === "/login" || req.path === "/register";
+  next();
+});
+
 
 // Routes
 app.get("/", (req, res) => {
