@@ -12,7 +12,7 @@ ARC already supports:
 
 Although this project is still being expanded.
 
-Now hosted on render: https://arc-web-8i2i.onrender.com/home
+Now hosted on render: https://arc.abiraltuladhar.dev
 
 ## Stack
 
