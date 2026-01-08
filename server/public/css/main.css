@@ -751,3 +751,29 @@ button{ font-family: inherit; }
   justify-self: center;
 }
 
+.leaderboard-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
+  padding: 60px 240px 0;
+}
+
+.global-leaderboard-card,
+.friend-leaderboard-card {
+  background: rgba(26, 26, 26, 0.244);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  min-height: 700px;
+  max-width: 600px;
+  justify-content: center;
+}
+
+.global-leaderboard-card h1 {
+  text-align: center;
+}
+
+.friend-leaderboard-card h1 {
+  text-align: center;
+}
+

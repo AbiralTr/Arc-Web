@@ -12,3 +12,11 @@
     Fixed frontend scale for laptop scale + other frontend changes
     Fixed quest scaling
     Fixed OpenAI API response parsing
+
+1/6/26:
+    Added friends
+    Added friends page
+    Connected backend logic for the above
+
+1/7/26:
+    Added (currently static) Leaderboard page + endpoint
