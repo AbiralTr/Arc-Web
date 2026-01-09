@@ -9,6 +9,7 @@ import questsRouter from "./routes/quests.js";
 import userRouter from "./routes/user.js";
 import {requirePageUser} from "./middleware/requirePageUser.js";
 import friendsRouter from "./routes/friends.js";
+import leaderboardRouter from "./routes/leaderboard.js";
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use("/api/auth", authRouter);
 app.use("/api/quests", questsRouter);
 app.use("/api/user", userRouter);
+app.use(leaderboardRouter);
 app.use(friendsRouter);
 app.use((req, res, next) => {
   res.locals.isAuthPage =
@@ -45,7 +47,5 @@ app.get("/home", requirePageUser, (req, res) => res.render("home"));
 app.get("/register", (req, res) => res.render("register"));
 
 app.get("/login", (req, res) => res.render("login"));
-
-app.get("/leaderboard", requirePageUser, (req, res) => res.render("leaderboard"));
 
 app.listen(PORT, () => console.log("Arc listening on", PORT));

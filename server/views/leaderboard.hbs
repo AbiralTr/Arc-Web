@@ -1,12 +1,15 @@
 <div class="leaderboard-page">
     <section class="global-leaderboard-card">
         <h1>Global Leaderboard</h1>
-        <section class="inner-global-leaderboard-card">
-            
-        </section>
+            {{#each users}}
+                <div class="global-leaderboard-entry">{{this.username}} Lv. {{this.level}}</div>
+            {{/each}}
     </section>
     <section class="friend-leaderboard-card">
         <h1>Friend Leaderboard</h1>
+            {{#each friends}}
+                <div class="friend-leaderboard-entry">{{this.username}} Lv. {{this.level}}</div>
+            {{/each}}
     </section>
 </div>
 
