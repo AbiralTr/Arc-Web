@@ -5,10 +5,10 @@
                 <div class="global-leaderboard-entry">{{this.username}} Lv. {{this.level}}</div>
             {{/each}}
     </section>
-    <section class="friend-leaderboard-card">
+<section class="friend-leaderboard-card">
         <h1>Friend Leaderboard</h1>
             {{#each friends}}
-                <div class="friend-leaderboard-entry">{{this.username}} Lv. {{this.level}}</div>
+                <div class="friend-leaderboard-entry">{{this.user.username}} Lv. {{this.user.level}}</div>
             {{/each}}
     </section>
 </div>
