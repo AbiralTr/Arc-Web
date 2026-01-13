@@ -126,7 +126,7 @@
         <div class="qcard-title">${title}</div>
         <div class="qcard-meta">${stat.toUpperCase()} · Difficulty ${q.difficulty} · ${q.xpReward} XP</div>
 
-        <div class="qcard-desc">${desc}</div>
+        <div class="qcard-desc" style="font-size: 12px">${desc}</div>
         <div class="qcard-actions">
           <button class="qbtn" id="completeQuestBtn" data-id="${q.id}">
             Complete Quest
