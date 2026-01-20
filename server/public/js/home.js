@@ -175,10 +175,38 @@
         updateRadar(data.user);
       }
       await loadStats();
-
+      await loadActivity();
       btn.textContent = "Completed";
+
     });
   }
+
+  async function loadActivity(){
+    const res = await fetch("/api/quests/activity", {credentials: "include"});
+    const data = await res.json()
+    const body = document.getElementById("logPanelBody");
+    if (!body) return;
+
+    if (!res.ok || !data.recentCompleted || data.recentCompleted.length === 0) {
+      body.classList.remove("has-items");
+      body.innerHTML = `<div class="muted">No completed quests yet.</div>`;
+      return;
+    }
+
+    body.classList.add("has-items");
+
+
+    body.innerHTML = data.recentCompleted.map(q => {
+      const when = q.completedAt ? new Date(q.completedAt).toLocaleString() : "";
+      return `
+        <div class="log-item">
+          <div class="log-title">${escapeHtml(q.title)}</div>
+          <div class="log-meta muted">${q.xpReward} XP  (${q.stat.toUpperCase()})</div>
+        </div>
+      `;
+    }).join("");
+  }
+
 
   async function generateQuestFor(stat) {
     const questOut = $("questOut");
@@ -225,6 +253,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     wireStatButtons();
     loadChangelog();
+    loadActivity();
     await loadStats();
   });
 

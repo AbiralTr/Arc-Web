@@ -191,7 +191,7 @@ router.post("/:id/complete", requireUser, async (req, res) => {
   const user = await prisma.$transaction(async (tx) => {
     await tx.quest.update({
       where: { id },
-      data: { status: "completed" },
+      data: { status: "completed", completedAt: new Date() },
     });
 
     const current = await tx.user.findUnique({
@@ -225,5 +225,20 @@ router.post("/:id/complete", requireUser, async (req, res) => {
 
   return res.json({ ok: true, gainedXp, stat, user });
 });
+
+router.get("/activity", requireUser, async (req, res) => {
+  const userId = req.userId;
+
+  const recentCompleted = await prisma.quest.findMany({
+    where: { userId, status: "completed", completedAt: { not: null } },
+    orderBy: { completedAt: "desc" },
+    take: 3,
+    select: { id: true, title: true, stat: true, xpReward: true, completedAt: true },
+  });
+
+  return res.json({ ok: true, recentCompleted });
+});
+
+
 
 export default router;

@@ -13,7 +13,7 @@ model User {
   username     String   @unique
   passwordHash String
   createdAt    DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt    DateTime @updatedAt
 
   level        Int      @default(1)
   xp           Int      @default(0)
@@ -27,25 +27,26 @@ model User {
   quests       Quest[]
 
   sentFriendships     Friendship[] @relation("FriendshipRequester")
-
   receivedFriendships Friendship[] @relation("FriendshipAddressee")
 }
-
 
 model Quest {
   id          String   @id @default(uuid())
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  stat        String   // "str" | "int" | "end" | "cha" | "wis"
+  stat        String
   title       String
   description String
   difficulty  Int      @default(1)
   xpReward    Int      @default(10)
   tags        Json?
-  status      String   @default("active")
+  status      String   @default("active") // "active" | "completed" etc.
   createdAt   DateTime @default(now())
+
+  completedAt DateTime? // <-- add this
 }
+
 
 enum FriendshipStatus {
   PENDING
