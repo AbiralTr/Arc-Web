@@ -314,7 +314,8 @@ button { font-family: inherit; }
 
 .stat-card-title,
 .info-panel-title,
-.quest-panel-title {
+.quest-panel-title,
+.log-panel-title {
   font-size: calc(18px * var(--uiScale));
   font-weight: 900;
 }
@@ -444,11 +445,13 @@ button { font-family: inherit; }
   border: 1px solid var(--border);
   border-radius: calc(16px * var(--uiScale));
   padding: calc(16px * var(--uiScale));
+  justify-content: center;
+  align-items: center;
 }
 
 .qcard-title {
   font-size: calc(16px * var(--uiScale));
-  font-weight: 900;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
@@ -463,6 +466,7 @@ button { font-family: inherit; }
   margin-top: calc(12px * var(--uiScale));
   color: #c8cee0;
   line-height: 1.45;
+  font-size: calc(12px * var(--uiScale));
 }
 
 .qcard-actions {
@@ -706,3 +710,26 @@ button { font-family: inherit; }
   text-align: center;
   font-weight: 500;
 } 
+
+.quest-panel,
+.log-panel {
+  justify-content: center;
+  min-height: 280px;
+  max-height: 280px;
+  
+}
+
+.log-panel {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  box-shadow: var(--shadow);
+  padding: var(--pad);
+}
+
+.right-side-home{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
