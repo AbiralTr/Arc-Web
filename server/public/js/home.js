@@ -42,22 +42,6 @@
     }).join(" ");
   }
 
-  async function loadChangelog() {
-    const el = document.getElementById("changelogBody");
-    if (!el) return;
-
-    try {
-      const res = await fetch("../text/changelog.txt");
-      if (!res.ok) throw new Error("Failed to load changelog");
-
-      const text = await res.text();
-      el.textContent = text; 
-    } catch (err) {
-      el.textContent = "Unable to load changelog.";
-    }
-  }
-
-
   function updateRadar(user) {
     const poly = document.getElementById("valuePoly");
     if (!poly) return;
@@ -252,7 +236,6 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     wireStatButtons();
-    loadChangelog();
     loadActivity();
     await loadStats();
   });
