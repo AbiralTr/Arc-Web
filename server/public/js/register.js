@@ -29,3 +29,22 @@ document.getElementById("register").addEventListener("submit", async (e) => {
         }, 600);
     }
 });
+
+const guestBtn = document.getElementById("guestBtn");
+if (guestBtn) {
+  guestBtn.addEventListener("click", async () => {
+    guestBtn.disabled = true;
+    document.getElementById("msg").textContent = "Creating guest session...";
+
+    const res = await fetch("/api/auth/guest", { method: "POST" });
+    const data = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      guestBtn.disabled = false;
+      document.getElementById("msg").textContent = data.error || "Could not create guest";
+      return;
+    }
+
+    window.location.href = "/home";
+  });
+}

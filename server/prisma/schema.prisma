@@ -9,9 +9,14 @@ datasource db {
 
 model User {
   id           String   @id @default(uuid())
-  email        String   @unique
-  username     String   @unique
-  passwordHash String
+
+  email        String?  @unique
+  username     String?  @unique
+  passwordHash String?
+
+  isGuest      Boolean  @default(false)
+  guestExpiresAt DateTime?
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

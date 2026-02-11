@@ -1,0 +1,6 @@
+-- AlterTable
+ALTER TABLE "User" ADD COLUMN     "guestExpiresAt" TIMESTAMP(3),
+ADD COLUMN     "isGuest" BOOLEAN NOT NULL DEFAULT false,
+ALTER COLUMN "email" DROP NOT NULL,
+ALTER COLUMN "passwordHash" DROP NOT NULL,
+ALTER COLUMN "username" DROP NOT NULL;

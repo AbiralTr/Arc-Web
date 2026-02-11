@@ -762,3 +762,13 @@ button { font-family: inherit; }
   flex-direction: column;
   gap: 30px;
 }
+
+.auth-card .btn-secondary {
+  background: rgba(14,17,23,0.70);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.10);
+}
+
+.auth-card .btn-secondary:hover {
+  border-color: rgba(122,162,255,0.55);
+}

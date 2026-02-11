@@ -27,6 +27,17 @@ function setAuthCookie(res, userId) {
   });
 }
 
+function getUserIdFromCookie(req) {
+  const token = req.cookies?.arc_token;
+  if (!token) return null;
+  try {
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    return payload.userId;
+  } catch {
+    return null;
+  }
+}
+
 router.post("/register", async (req, res) => {
   const parsed = registerSchema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: "Invalid input" });
@@ -41,13 +52,39 @@ router.post("/register", async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, 12);
 
+  const currentId = getUserIdFromCookie(req);
+
+  if (currentId) {
+    const current = await prisma.user.findUnique({
+      where: { id: currentId },
+      select: { id: true, isGuest: true },
+    });
+
+    if (current?.isGuest) {
+      const upgraded = await prisma.user.update({
+        where: { id: currentId },
+        data: {
+          email,
+          username,
+          passwordHash,
+          isGuest: false,
+          guestExpiresAt: null,
+        },
+        select: { id: true, email: true, username: true, createdAt: true },
+      });
+
+      setAuthCookie(res, upgraded.id);
+      return res.json({ user: upgraded });
+    }
+  }
+
   const user = await prisma.user.create({
     data: { email, username, passwordHash },
     select: { id: true, email: true, username: true, createdAt: true },
   });
 
   setAuthCookie(res, user.id);
-  res.json({ user });
+  return res.json({ user });
 });
 
 router.post("/login", async (req, res) => {
@@ -83,7 +120,7 @@ router.get("/me", async (req, res) => {
 
     const user = await prisma.user.findUnique({
       where: { id: payload.userId },
-      select: { id: true, email: true, username: true, createdAt: true },
+      select: { id: true, email: true, username: true, isGuest: true, guestExpiresAt: true, createdAt: true },
     });
 
     if (!user) return res.status(401).json({ error: "Not logged in" });
@@ -92,5 +129,21 @@ router.get("/me", async (req, res) => {
     return res.status(401).json({ error: "Not logged in" });
   }
 });
+
+router.post("/guest", async (req, res) => {
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  const user = await prisma.user.create({
+    data: {
+      isGuest: true,
+      guestExpiresAt: expiresAt,
+    },
+    select: { id: true, isGuest: true, guestExpiresAt: true, createdAt: true },
+  });
+
+  setAuthCookie(res, user.id);
+  return res.json({ user });
+});
+
 
 export default router;

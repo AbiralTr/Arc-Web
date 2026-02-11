@@ -75,7 +75,8 @@
     try { data = await res.json(); } catch {}
 
     if (res.ok && data?.user) {
-      const name = data.user.username || data.user.email || "User";
+      const name = data.user.isGuest ? "Guest" : (data.user.username || data.user.email || "User");
+
       if (whoami) whoami.textContent = name;
       if (drawerUser) drawerUser.textContent = name;
 
